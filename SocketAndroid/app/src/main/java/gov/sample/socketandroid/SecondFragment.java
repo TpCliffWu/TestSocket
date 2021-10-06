@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import gov.sample.socketandroid.databinding.FragmentSecondBinding;
 
@@ -21,19 +20,45 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
+        OnListen = false;
+
         binding = FragmentSecondBinding.inflate(inflater, container, false);
+
+
         return binding.getRoot();
 
     }
 
+    public boolean OnListen;
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
+        binding.buttonListen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                if (OnListen) {
+
+                    StopListen();
+                } else {
+
+                    StartListen();
+                }
+
+//                NavHostFragment.findNavController(SecondFragment.this)
+//                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+
+
+            }
+
+            private void StartListen() {
+                OnListen =true;
+               binding.buttonListen.setText("Start Listen");
+            }
+
+            private void StopListen() {
+                OnListen = false;
+             binding.buttonListen.setText("Stop Listen");
             }
         });
     }
